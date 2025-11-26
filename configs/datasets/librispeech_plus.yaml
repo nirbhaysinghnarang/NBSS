@@ -1,0 +1,16 @@
+data:
+  class_path: data_loaders.librispeech_plus.LibriSpeechPlusDataModule
+  init_args:
+    librispeech_dir: ~/datasets/LibriSpeech
+    rir_dir: ~/datasets/librispeech_rirs
+    target: direct_path
+    datasets: ["train", "val", "test", "test"]
+    audio_time_len: [4.0, 4.0, null, null]
+    ovlp: mid
+    speech_overlap_ratio: [0.1, 1.0]
+    sir: [-5, 5]
+    snr: [0, 20]
+    num_spk: 1
+    sample_rate: 16000
+    noise_type: ["babble", "white"]
+    batch_size: [4, 4]

@@ -866,10 +866,28 @@ def generate_rir_files(
     for setdir in ['train', 'validation', 'test']:
         os.makedirs(os.path.join(rir_dir, setdir), exist_ok=True)
 
+    # if not use_gpu:
+    #     from p_tqdm import p_map
+    #     p_map(
+    #         partial(__gen__, fs=fs, use_gpu=use_gpu),
+    #         pars,
+    #         num_cpus=mp.cpu_count() // 2,
+    #     )
     if not use_gpu:
         from p_tqdm import p_map
         p_map(
-            partial(__gen__, fs=fs, use_gpu=use_gpu),
+            partial(
+                __gen__,
+                fs=fs,
+                use_gpu=use_gpu,
+                train_rir_num=train_rir_num,
+                val_rir_num=val_rir_num,
+                rir_dir=rir_dir,
+                attn_diff_speech=attn_diff_speech,
+                attn_max=attn_max,
+                attn_diff_noise=attn_diff_noise,
+                split_trajectory=split_trajectory,
+            ),
             pars,
             num_cpus=mp.cpu_count() // 2,
         )
