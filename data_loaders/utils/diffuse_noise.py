@@ -54,8 +54,8 @@ def gen_desired_spatial_coherence(pos_mics: np.ndarray, fs: int, noise_field: st
     Cs = np.zeros((num_freqs, M, M), dtype=np.complex128)
     for k in range(1, num_freqs):
         D, V = np.linalg.eig(DSC[:, :, k])
+        D = np.maximum(D, 0)  # Clip negative eigenvalues
         C = V.T * np.sqrt(D)[:, np.newaxis]
-        # C = scipy.linalg.cholesky(DSC[:, :, k])
         Cs[k, ...] = C
 
     return DSC, Cs
